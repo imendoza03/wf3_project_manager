@@ -1,4 +1,6 @@
-
+* {
+	box-sizing : 'border-box';
+}
 h3 {
 	margin-top: 10px;
 }
@@ -8,13 +10,6 @@ img {
 	width: 150px;
 }
 
-h3, nav.navbar{
-	visibility: hidden;
-}
-
 @media only screen and (max-width: 600px) 
 {
-	nav.navbar , h3{
-		visibility: visible;
-	}
 }
