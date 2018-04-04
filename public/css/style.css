@@ -10,6 +10,18 @@ img {
 	width: 150px;
 }
 
+input {
+	display: block;
+}
+
+form > button {
+	margin-top: 10px;
+}
+
 @media only screen and (max-width: 600px) 
 {
+}
+
+#logo{
+	flex-grown: none ;
 }

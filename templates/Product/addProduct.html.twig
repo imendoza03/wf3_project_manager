@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{#{{ form(formular) }}#}
+<div class="container">
+{{ form_start(formular) }}
+	{{ form_row(formular.name) }}
+	{{ form_row(formular.description) }}
+	{{ form_row(formular.version) }} </br>
+{#{{ form_rest(formular) }}#}
+{{ form_end(formular) }}
+</div>
+{% endblock %}
