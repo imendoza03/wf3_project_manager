@@ -18,10 +18,17 @@ form > button {
 	margin-top: 10px;
 }
 
-@media only screen and (max-width: 600px) 
-{
+nav, #header {
+	max-width: 1140px;
+	margin: auto;
 }
 
-#logo{
-	flex-grown: none ;
+#header{
+	display: flex;
+	flex-direction: row;
+	margin-top: 30px;
+}
+
+.block-text {
+	margin-left: 15px;
 }

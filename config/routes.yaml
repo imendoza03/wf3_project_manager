@@ -9,3 +9,7 @@ homepage:
 addProduct:
     path: /add/product
     controller: App\Controller\ProductController::addProduct
+
+registerUser:
+    path: /register/user
+    controller: App\Controller\UserController::registerUser
