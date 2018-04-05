@@ -6,10 +6,16 @@ homepage:
     path: /
     controller: App\Controller\DefaultController::homePage
 
-addProduct:
+product_add:
     path: /add/product
     controller: App\Controller\ProductController::addProduct
 
-registerUser:
-    path: /register/user
+user_register:
+    path: /register
     controller: App\Controller\UserController::registerUser
+
+user_activate:
+    path: /user/activate/{token}
+    controller: App\Controller\UserController::activateUser
+    requirements:
+        token: '[a-z0-9-]+'

@@ -66,11 +66,11 @@ class ProductController
        if($form->isSubmitted() && $form->isValid()) {
            $manager->persist($product);
            $manager->flush();
-           
+          
            //getFlashBag() is not defined in the session
            $session->getFlashBag()->add('info', 'Your product has been created :) !');
            
-           return new RedirectResponse($urlGenerator->generate('homepage'));
+           return new RedirectResponse($urlGenerator->generate('homepage'));    
        }
         
        return new Response(

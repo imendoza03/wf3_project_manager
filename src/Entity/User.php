@@ -77,7 +77,7 @@ class User
     private $emailToken;
     
     public function __construct() {
-        $this->emailToken(Uuid::uuid1());
+        $this->setEmailToken(Uuid::uuid1());
     }
 
     public function getId()
