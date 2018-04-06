@@ -40,6 +40,7 @@ class UserController
             'username', 
             TextType::class,
             [
+                'label' => 'FORM.USER.USERNAME',
                 'required' => true
             ]
             )
@@ -47,6 +48,7 @@ class UserController
             'firstname', 
             TextType::class,
             [
+                'label' => 'FORM.USER.FIRSTNAME',
                 'required' => true
             ]
             )
@@ -54,6 +56,7 @@ class UserController
             'lastname', 
             TextType::class,
             [
+                'label' => 'FORM.USER.LASTNAME',
                 'required' => true
             ]
             )
@@ -61,6 +64,7 @@ class UserController
             'email', 
             EmailType::class,
             [
+                'label' => 'FORM.USER.EMAIL',
                 'required' => true
             ]
             )
@@ -68,18 +72,20 @@ class UserController
             'password', 
             RepeatedType::class,
             [
+                'label' => '',
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
                 'options' => array('attr' => array('class' => 'password-field')),
                 'required' => true,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
+                'first_options'  => array('label' => 'FORM.USER.PASSWORD'),
+                'second_options' => array('label' => 'FORM.USER.REPEATPASSWORD'),
             ]
             )
         ->add(
             'submit',
             SubmitType::class,
             [
+                'label' => 'FORM.USER.SUBMIT',
                 'attr' => [
                     'class' => 'btn-block btn-success'
                 ]
@@ -98,11 +104,19 @@ class UserController
             $message->setFrom('ivanmendoza@gmail.com')
             ->setTo($user->getEmail())
             ->setSubject('Validate your account.')
+            ->setContentType('text/html')
             ->setBody(
                 $twig->render(
                     'Mail/accountCreation.html.twig',
                     ['user' => $user]
                 )
+                
+            )->addPart(
+                $twig->render(
+                    'Mail/accountCreation.txt.twig',
+                    ['user' => $user]
+                )
+                ,'text/plain'
             );
             
             $mailer->send($message);

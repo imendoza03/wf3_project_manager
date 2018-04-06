@@ -1,0 +1,29 @@
+HEADER:
+    HOME: Home
+    USER: User
+    REGISTER: Register
+    ADD:
+        PRODUCT: Add product
+    LIST:
+        PRODUCT: Liste of products
+    PROJECT:
+        MANAGER: Project Manager
+    LANGUAGE:
+        TITLE: Language
+        FIRST: French
+        SECOND: English
+
+FORM:
+    PRODUCT:
+        NAME: 'Project name * :'  
+        DESCRIPTION: 'Projet description :' 
+        VERSION: 'Project version * :'
+        SUBMIT: Submit
+    USER:
+        USERNAME: "Username * :"
+        FIRSTNAME: 'Firstname * :'
+        LASTNAME: 'Lastname * :'
+        EMAIL: 'Email * :'
+        PASSWORD: 'Password * :'
+        REPEATPASSWORD: 'Repeat password * :'
+        SUBMIT: Submit

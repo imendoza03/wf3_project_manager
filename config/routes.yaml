@@ -3,19 +3,39 @@
 #    controller: App\Controller\DefaultController::index
 
 homepage:
-    path: /
+    path: /{_locale}
     controller: App\Controller\DefaultController::homePage
+    defaults:
+        _locale: en
+    requirements:
+        _locale: 'en|fr'
 
 product_add:
-    path: /add/product
+    path: /{_locale}/add/product
     controller: App\Controller\ProductController::addProduct
+    defaults:
+        _locale: en
+    requirements:
+        _locale: 'en|fr'
 
 user_register:
-    path: /register
+    path: /{_locale}/register
     controller: App\Controller\UserController::registerUser
+    defaults:
+        _locale: en
+    requirements:
+        _locale: 'en|fr'
 
 user_activate:
     path: /user/activate/{token}
     controller: App\Controller\UserController::activateUser
     requirements:
         token: '[a-z0-9-]+'
+        
+product_list:
+    path: /{_locale}/list/product
+    controller: App\Controller\ProductController::listProduct
+    defaults:
+        _locale: en
+    requirements:
+        _locale: 'en|fr'

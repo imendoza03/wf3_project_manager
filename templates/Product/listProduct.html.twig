@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Version</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+            <tr>
+              <th scope="col">{{ product.getName() }}</th>
+              <th scope="col">{{ product.getDescription() }}</th>
+              <th scope="col">{{ product.getVersion() }}</th>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+{% endblock %}

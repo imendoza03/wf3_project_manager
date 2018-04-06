@@ -1,8 +1,14 @@
-<p>Hello {{ user.getUsername() }}</p>
-
-<p>To confirm your email address, please click on the following link: </p>
-<br/>
-
-<a href="{{ absolute_url(path('user_activate', {'token': user.getEmailToken()})) }}">
-{{ absolute_url(path('user_activate', {'token': user.getEmailToken()})) }}
-</a>
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+    	<title>Verification</title>
+    </head>
+    <body>
+        <p>Hello {{ user.getUsername() }}</p>
+        <p>To confirm your email address, please click on the following link: </p>
+        <a href="{{ absolute_url(path('user_activate', {'token': user.getEmailToken()})) }}">
+        {{ absolute_url(path('user_activate', {'token': user.getEmailToken()})) }}
+        </a>
+    </body>
+</html>

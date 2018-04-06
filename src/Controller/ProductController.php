@@ -35,25 +35,33 @@ class ProductController
             'name', 
             TextType::class,
             [
-                'required' => false,
-                'label' => 'The project name *',
+                'required' => true,
+                'label' => 'FORM.PRODUCT.NAME'
             ]
          )
         ->add(
             'description', 
             TextareaType::class, 
             [
+                'label' => 'FORM.PRODUCT.DESCRIPTION',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ]
          )
-        ->add('version', TextType::class)
+        ->add(
+            'version', 
+            TextType::class,
+            [
+                'label' => 'FORM.PRODUCT.VERSION'
+            ]
+        )
         ->add(
             'submit', 
             SubmitType::class,
             [
+                'label' => 'FORM.PRODUCT.SUBMIT',
                 'attr' => [
                     'class' => 'btn-block btn-success'
                 ]
@@ -79,6 +87,25 @@ class ProductController
             'formular' => $form->createView()
            ])
        );
+    }
+    
+    public function listProduct
+    (
+        Environment $twig,
+        ObjectManager $manager
+    ) 
+    {
+        $productRepository = $manager->getRepository(Product::class);
+        $products = $productRepository->findAll();
+        
+        return new Response
+        (
+            $twig->render
+            (
+                'Product/listProduct.html.twig',
+                ['products' => $products]
+            )
+        );
     }
 }
 

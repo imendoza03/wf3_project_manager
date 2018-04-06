@@ -1,0 +1,29 @@
+HEADER:
+    HOME: Acceuil
+    USER: Utilisateur
+    REGISTER: "S'enregistrer"
+    ADD:
+        PRODUCT: Ajouter un produit
+    LIST:
+        PRODUCT: Liste de produits
+    PROJECT:
+        MANAGER: Manageur de Projets
+    LANGUAGE:
+        TITLE: Langue
+        FIRST: Francais
+        SECOND: Anglais
+
+FORM:
+    PRODUCT:
+        NAME: 'Nom du project * :'  
+        DESCRIPTION: 'Description du project :'
+        VERSION: 'Version du project * :'
+        SUBMIT: Envoyer
+    USER:
+        USERNAME: "Nom d'utilisateur * :"
+        FIRSTNAME: 'Prenom * :'
+        LASTNAME: 'Nom * :'
+        EMAIL: 'Mail * :'
+        PASSWORD: 'Mot de passe * :'
+        REPEATPASSWORD: 'Repetez mot de passe * :'
+        SUBMIT: Envoyer
