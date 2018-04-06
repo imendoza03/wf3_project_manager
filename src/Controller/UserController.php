@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController
 {
@@ -151,11 +152,23 @@ class UserController
         ->setEmailToken(null);
         
         $manager->flush();
-        
-//         return new Response('Hellow guys ' .$token.' !');
 
         $session->getFlashBag()->add('info', 'User successfully activated !');
 
         return new RedirectResponse($urlGenerator->generate('homepage'));
+    }
+    
+    public function usernameAvailable(Request $request, UserRepository $userRepository) 
+    {
+        $username = $request->request->get('username');
+        
+        $usernameUnavailable = false;
+        if(!empty($username)) {
+            $usernameUnavailable = $userRepository->usernameAvailable($username);
+        }
+        
+        return new JsonResponse([
+            'available' => !$usernameUnavailable
+        ]);
     }
 }

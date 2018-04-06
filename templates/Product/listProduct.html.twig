@@ -1,23 +1,25 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+{% if products is not empty %}
 <div class="container">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Description</th>
-          <th scope="col">Version</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for product in products %}
-            <tr>
-              <th scope="col">{{ product.getName() }}</th>
-              <th scope="col">{{ product.getDescription() }}</th>
-              <th scope="col">{{ product.getVersion() }}</th>
-            </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+   <div class="row">
+    {% for product in products %}
+        <div class="col-sm-4">
+          <div class="card bg-light mb-3" style="max-width: 18rem;">
+              <div class="card-header">{{ product.getName() }} - v.{{ product.getVersion() }}</div>
+              <div class="card-body">
+                <p class="card-text">{{ product.getDescription() }}</p>
+              </div>
+              <div class="card-footer">
+              	<button class="btn btn-block btn-success">Details</button>
+              </div>
+		  </div>
+        </div>
+     {% endfor %}
+   </div>
 </div>
+{% else %}
+<p>{{ 'LIST.NOT.PRODUCT' }}</p>
+{% endif %}
+
 {% endblock %}

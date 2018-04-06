@@ -39,3 +39,8 @@ product_list:
         _locale: en
     requirements:
         _locale: 'en|fr'
+        
+username_available:
+    path: /username/available
+    controller: App\Controller\UserController::usernameAvailable
+    methods: ['POST']

@@ -14,6 +14,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\Repository\ProductRepository;
 
 class ProductController
 {
@@ -92,10 +93,9 @@ class ProductController
     public function listProduct
     (
         Environment $twig,
-        ObjectManager $manager
+        ProductRepository $productRepository
     ) 
     {
-        $productRepository = $manager->getRepository(Product::class);
         $products = $productRepository->findAll();
         
         return new Response
