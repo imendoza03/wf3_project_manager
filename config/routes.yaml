@@ -44,3 +44,10 @@ username_available:
     path: /username/available
     controller: App\Controller\UserController::usernameAvailable
     methods: ['POST']
+
+login:
+    path: /{_locale}/login
+    controller: App\Controller\UserController::login
+    
+logout:
+    path: /logout

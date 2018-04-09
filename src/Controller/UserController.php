@@ -21,6 +21,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use App\Repository\RoleRepository;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UserController
 {
@@ -155,7 +157,8 @@ class UserController
         $token, 
         ObjectManager $manager,
         SessionInterface $session,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        RoleRepository $roleRepository
     ) 
     {
         $userRepository = $manager->getRepository(User::class);
@@ -166,8 +169,10 @@ class UserController
             throw new NotFoundHttpException('User not found for the given token');
         }
         
-        $user->setActive(true)
-        ->setEmailToken(null);
+        $user
+        ->setActive(true)
+        ->setEmailToken(null)
+        ->addRole($roleRepository->findOneByLabel('ROLE_ACTIVE'));
         
         $manager->flush();
 
@@ -188,5 +193,23 @@ class UserController
         return new JsonResponse([
             'available' => !$usernameUnavailable
         ]);
+    }
+    
+    public function login
+    (
+        AuthenticationUtils $authUtils,
+        Environment $twig
+    )
+    {
+        return new Response(
+            $twig->render(
+                'Security/login.html.twig',
+                [
+                    'last_username' => $authUtils->getLastUsername(),
+                    'error' => $authUtils->getLastAuthenticationError()
+                ]
+            )
+        );
+        
     }
 }

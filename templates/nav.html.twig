@@ -16,13 +16,20 @@
               {{ 'HEADER.USER' | trans }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="nav-link" href="{{ path('user_register') }}">{{ 'HEADER.REGISTER' | trans }}</a>
-              <div class="dropdown-divider"></div>
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              	<a class="nav-link" href="{{ path('logout') }}">{{ 'HEADER.LOGOUT' | trans }}</a>
+              {% else %}
+              	<a class="nav-link" href="{{ path('login') }}">{{ 'HEADER.LOGIN' | trans }}</a>
+              	<div class="dropdown-divider"></div>
+              	<a class="nav-link" href="{{ path('user_register') }}">{{ 'HEADER.REGISTER' | trans }}</a>
+              {% endif %}
             </div>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="{{ path('product_add') }}">{{ 'HEADER.ADD.PRODUCT' | trans }}</a>
-          </li>
+          {% if is_granted('ROLE_ACTIVE') %}
+              <li class="nav-item active">
+                <a class="nav-link" href="{{ path('product_add') }}">{{ 'HEADER.ADD.PRODUCT' | trans }}</a>
+              </li>
+          {% endif %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{ 'HEADER.LANGUAGE.TITLE' | trans }}
@@ -33,9 +40,11 @@
               <a class="nav-link" href="{{ path(app.request.attributes.get('_route'), {'_locale' : 'en'}) }}">{{ 'HEADER.LANGUAGE.SECOND' | trans }}</a>
             </div>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="{{ path('product_list') }}">{{ 'HEADER.LIST.PRODUCT' | trans }}</a>
-          </li>
+          {% if is_granted('ROLE_ACTIVE') %}
+              <li class="nav-item active">
+              	<a class="nav-link" href="{{ path('product_list') }}">{{ 'HEADER.LIST.PRODUCT' | trans }}</a>
+              </li>
+          {% endif %}
         </ul>
       </div>
     </nav>

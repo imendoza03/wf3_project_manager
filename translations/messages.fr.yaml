@@ -2,6 +2,8 @@ HEADER:
     HOME: Acceuil
     USER: Utilisateur
     REGISTER: "S'enregistrer"
+    LOGIN: Connection
+    LOGOUT: Déconnexion
     ADD:
         PRODUCT: Ajouter un produit
     LIST:

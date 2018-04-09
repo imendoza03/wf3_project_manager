@@ -2,10 +2,12 @@ HEADER:
     HOME: Home
     USER: User
     REGISTER: Register
+    LOGIN: Login
+    LOGOUT: Logout
     ADD:
         PRODUCT: Add product
     LIST:
-        PRODUCT: Liste of products
+        PRODUCT: List of products
     PROJECT:
         MANAGER: Project Manager
     LANGUAGE:

@@ -29,6 +29,11 @@ nav, #header {
 	margin-top: 30px;
 }
 
+.login{
+	margin: auto;
+	width: 79%;
+}
+
 .available-username {
 	color:green;
 }
