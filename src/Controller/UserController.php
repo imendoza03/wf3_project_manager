@@ -19,6 +19,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use App\Repository\RoleRepository;
 
 class UserController
 {
@@ -30,7 +32,9 @@ class UserController
         ObjectManager $manager,
         SessionInterface $session,
         UrlGeneratorInterface $urlGenerator,
-        \Swift_Mailer $mailer
+        \Swift_Mailer $mailer,
+        EncoderFactoryInterface $encoderFactory,
+        RoleRepository $roleRepository
     )
     {
         $user = new User();
@@ -97,6 +101,20 @@ class UserController
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
+            //md5 creates a digest message, a strong to validate the matching of 2 elements
+            $salt = md5($user->getUsername());
+            $user->setSalt($salt);
+            
+            $encoder = $encoderFactory->getEncoder(User::class);
+            $password = $encoder->encodePassword(
+                $user->getPassword(), 
+                $salt
+            );
+            
+            $user->setPassword($password);
+            
+            $user->addRole($roleRepository->findOneByLabel('ROLE_USER'));
+            
             $manager->persist($user);
             $manager->flush();
             

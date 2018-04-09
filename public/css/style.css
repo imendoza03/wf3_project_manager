@@ -28,3 +28,11 @@ nav, #header {
 	flex-direction: row;
 	margin-top: 30px;
 }
+
+.available-username {
+	color:green;
+}
+
+.unavailable-username {
+	color:red;
+}

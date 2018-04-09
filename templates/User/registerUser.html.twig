@@ -4,3 +4,8 @@
     {{ form(formRegister) }}
 </div>
 {% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="/js/register.js" type="text/javascript"></script>
+{% endblock %}
