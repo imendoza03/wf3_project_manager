@@ -11,7 +11,11 @@
                 <p class="card-text">{{ product.getDescription() }}</p>
               </div>
               <div class="card-footer">
-              	<button class="btn btn-block btn-success">Details</button>
+              	<a href="{{ path('product_detail', {id: product.getId()})}}">
+                  	<button class="btn btn-block btn-success">
+                  		Details
+                  	</button>
+              	</a>
               </div>
 		  </div>
         </div>

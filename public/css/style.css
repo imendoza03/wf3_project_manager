@@ -41,3 +41,12 @@ nav, #header {
 .unavailable-username {
 	color:red;
 }
+
+form[name='comment']{
+	margin-top: 20px;	
+}
+
+.card-product-detail, form[name='comment']{
+	margin: auto;
+	width: 81%;
+}

@@ -39,6 +39,15 @@ product_list:
         _locale: en
     requirements:
         _locale: 'en|fr'
+        id: ^[0-9]+$
+
+product_detail:
+    path: /{_locale}/product/detail/{id}
+    controller: App\Controller\ProductController::productDetail
+    defaults:
+        _locale: en
+    requirements:
+        _locale: 'en|fr'
         
 username_available:
     path: /username/available

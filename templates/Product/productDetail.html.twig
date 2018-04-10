@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="card card-product-detail">
+      <div class="card-header">
+        {{ product.getName() }} <span class="badge badge-pill badge-warning">v{{ product.getVersion() }}</span>
+      </div>
+      <div class="card-body">
+        <blockquote class="blockquote mb-0">
+          <p>{{ product.getDescription() }}</p>
+        </blockquote>
+        
+        <blockquote class="blockquote mb-0">
+          <p>{{ product.getDescription() }}</p>
+          <footer class="blockquote-footer">Comments:</footer>
+        </blockquote>
+        {% for comment in product.getComments() %}
+    		<p>{{ comment.getComment() }}</p>
+    	{% for file in comment.getFiles() %}
+    		{% if file.getMimeType()|slice(0,6) == 'image/' %}
+    			<img 
+    				src="{{ file.getFileUrl() }}"
+    				alt="{{ file.getName() }}"
+    				src="{{ file.getFileUrl() }}"
+    			/>
+    		{% else %}
+    			<a href="{{ file.getFileUrl() }}">
+    				<button>
+    					<span class="glyphicon glyphicon-cloud-download">
+    						{{ 'PRODUCT.DOWNLOAD' | trans }} {{ file.getName() }}
+    					</span>
+    				</button>
+    			</a>
+    		{% endif %}
+    	{% endfor %}
+    {% endfor %}
+      </div>
+	</div>
+    
+    {{ form(form) }}
+    
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="/js/commentFileAdder.js"></script>
+{% endblock %}
