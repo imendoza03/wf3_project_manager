@@ -15,6 +15,13 @@ class CommentType extends AbstractType
     {
         $builder->add('comment', TextareaType::class)
         ->add(
+            'comment',
+            TextareaType::class,
+            [
+                'required' => false
+            ]
+         )
+        ->add(
             'files',
             CollectionType::class,
             [

@@ -4,6 +4,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextFactory;
+use Symfony\Component\Validator\Context\ExecutionContextFactoryInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
@@ -36,6 +41,7 @@ class Comment
     
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CommentFile", mappedBy="comment", orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $files;
 
@@ -76,6 +82,17 @@ class Comment
         return $this->files;
     }
     
+    public function setFiles(array $files) 
+    {
+        $this->files = new ArrayCollection();
+        
+        foreach ($files as $file) {
+            $this->addFile($file);
+        }
+        
+        return $this;
+    }
+    
     public function addFile(CommentFile $file): self
     {
         if (!$this->files->contains($file)) {
@@ -109,5 +126,17 @@ class Comment
         $this->product = $product;
 
         return $this;
+    }
+    
+    /**
+     * @Assert\Callback()
+     */
+    public function validateComment(ExecutionContextInterface $context) 
+    {
+        if (empty($this->files) && empty($this->comment)) {
+            $context->buildViolation('This field cannot be empty if no files exist')
+                ->atPath('comment')
+                ->addViolation();
+        }
     }
 }

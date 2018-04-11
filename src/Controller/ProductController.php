@@ -14,11 +14,15 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use App\Repository\ProductRepository;
 use App\Entity\Comment;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Form\CommentType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Entity\CommentFile;
+use Ramsey\Uuid\Uuid;
 
 class ProductController
 {
@@ -29,7 +33,8 @@ class ProductController
         Request $request,
         ObjectManager $manager,
         SessionInterface $session,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        TokenStorageInterface $tokenStorage
     ) 
     {
         $product = new Product();
@@ -117,7 +122,10 @@ class ProductController
         int $id,
         ProductRepository $productRepository,
         Environment $twig,
-        FormFactoryInterface $formFactory
+        FormFactoryInterface $formFactory,
+        Request $request,
+        ObjectManager $manager,
+        UrlGeneratorInterface $urlGenerator
     ) 
     {
         $product = $productRepository->findOneById($id);
@@ -131,6 +139,64 @@ class ProductController
             $comment,
             ['stateless' => true]
         );
+        
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $tmpCommentFile = [];
+            
+            foreach ($comment->getFiles() as $fileArray) {
+                foreach ($fileArray as $file) {
+                    $name = sprintf(
+                        '%s.%s',
+                        Uuid::uuid1(),
+                        $file->getClientOriginalExtension()
+                    );
+                    
+                    $commentFile = new CommentFile();
+                    $commentFile->setComment($comment)
+                    ->setMimeType($file->getMimeType())
+                    ->setName($file->getClientOriginalName())
+                    ->setFileUrl('/upload/'.$name);
+                    
+                    $tmpCommentFile[] = $commentFile;
+
+                    $file->move(
+                        __DIR__.'../../public/upload',
+                        $name
+                    );
+                    
+                    $manager->persist($commentFile);
+                }
+            }
+            
+            $token = $tokenStorage->getToken();
+            if (!$token){
+                throw new \Exception();
+            }
+            
+            $user = $token->getUser();
+            if (!$user){
+                throw new \Exception();
+            }
+            
+            $comment->setFiles($tmpCommentFile)
+                ->setAuthor($user)
+                ->setProduct($product);
+            
+            $manager->persist($comment);
+            $manager->flush();
+            
+            return new RedirectResponse
+            (
+                $urlGenerator->generate
+                (
+                    'productDetail',
+                    [
+                        'product' => $product 
+                    ]
+                )
+            );
+        }
         
         return new Response(
             $twig->render(
